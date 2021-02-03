@@ -1,0 +1,17 @@
+.container {
+    width: 90%;
+    margin: 0 auto;
+}
+
+.list-group {
+    cursor: move;
+    padding-left: 0;
+}
+
+li {
+    list-style: none;
+}
+
+li:not(:last-child) {
+    margin-bottom: 20px;
+}
