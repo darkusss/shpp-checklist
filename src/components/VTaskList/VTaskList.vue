@@ -11,14 +11,14 @@
         </li>
       </template>
     </draggable>
-    <VPopup @close="addTask" v-model="isPopupOpen">
+    <VPopup @submit="addTask" v-model="isPopupOpen" @keyup.esc="isPopupOpen = false">
       <template #modal-button>
         Add task
       </template>
       <template #modal>
         <div>
           <h2>Add task</h2>
-          <label class="">
+          <label>
             <input type="text" v-model="newTaskValue" />
           </label>
           <div>
