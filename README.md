@@ -1,2 +1,2 @@
 # shpp-checklist
-A tiny checklist for personal use
+Description will be added at least when the project will be ended up ;)
