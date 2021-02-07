@@ -1,16 +1,19 @@
 :root {
     box-sizing: border-box;
     background: #84bd91;
+
+
 }
 
 body {
     margin: 0;
-}
 
-#app {
     font-family: Avenir, Helvetica, Arial, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+}
+
+#app {
     color: #2c3e50;
     width: 100vw;
 }

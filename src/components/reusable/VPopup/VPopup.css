@@ -24,6 +24,12 @@
 }
 
 .modal-wrapper > .modal {
+    width: 500px;
+    height: 400px;
+
+    max-width: 500px;
+    max-height: 400px;
+
     position: relative;
     background-color: white;
     border-radius: 3px;

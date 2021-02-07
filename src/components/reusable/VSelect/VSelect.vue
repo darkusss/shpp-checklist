@@ -11,8 +11,11 @@ import { defineComponent, ref, computed } from 'vue';
 
 export default defineComponent({
   name: 'VSelect',
-  setup(_, { emit }) {
-    const selected = ref('');
+  props: {
+    selected: [String, Number],
+  },
+  setup(props, { emit }) {
+    const selected = ref(props.selected);
 
     const computedSelected = computed({
       get: () => selected.value,
