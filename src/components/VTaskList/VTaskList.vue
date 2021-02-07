@@ -18,9 +18,13 @@
       <template #modal>
         <div>
           <h2>Add task</h2>
-          <label>
+          <label class="">
             <input type="text" v-model="newTaskValue" />
           </label>
+          <div>
+            <span>Deadline: </span>
+            <VDatePicker />
+          </div>
         </div>
       </template>
     </VPopup>
@@ -31,6 +35,7 @@
 import { defineComponent, ref } from 'vue';
 import draggable from 'vuedraggable';
 import VPopup from '@/components/reusable/VPopup';
+import VDatePicker from '@/components/VDatePicker';
 import VTask from '@/components/VTask';
 import useTasks from './composables/useTasks';
 
@@ -39,7 +44,8 @@ export default defineComponent({
   components: {
     VTask,
     VPopup,
-    draggable
+    VDatePicker,
+    draggable,
   },
   props: {
     today: Boolean,
@@ -64,7 +70,7 @@ export default defineComponent({
       el.taskResponse = newValue;
     },
     addTask() {
-      // if string is empty or has many spaces don't add it
+      // if this string is empty or has many spaces don't add it
       if (!this.newTaskValue.trim()) {
         return;
       }

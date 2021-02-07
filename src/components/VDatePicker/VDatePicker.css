@@ -1,0 +1,8 @@
+.date-picker-container {
+    width: 100%;
+}
+
+.date-picker-select {
+    display: inline-block;
+    width: fit-content;
+}
