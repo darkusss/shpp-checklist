@@ -18,7 +18,7 @@
         </template>
       </draggable>
     </div>
-    <VPopup @close="addTask" v-model="isPopupOpen">
+    <VPopup @submit="addTask" v-model="isPopupOpen" @keyup.esc="isPopupOpen = false">
       <template #modal-button>
         {{ $t('message.addTaskButton') }}
       </template>

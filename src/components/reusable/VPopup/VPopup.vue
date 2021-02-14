@@ -1,43 +1,60 @@
 <template>
-  <button @click="openModal">
+  <button @click="handleModalWindow">
     <slot name="modal-button"></slot>
   </button>
   <teleport to="body">
-    <div v-if="modelValue" class="modal-wrapper">
-      <div class="overlay" @click="closeModal" />
+    <div v-if="modelValue" class="modal-wrapper" >
+      <div class="overlay" @click="handleModalWindow" />
       <div class="modal">
+        <div class="close-button-container" @click="handleModalWindow">
+          <button class="close-button" />
+        </div>
         <slot name="modal"></slot>
-        <button @click="closeModal">{{ $t('message.addTaskAdd') }}</button>
+        <button @click="submitModal">{{ $t('message.addTaskAdd') }}</button>
       </div>
     </div>
   </teleport>
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from 'vue';
+import { defineComponent, ref, onMounted, onUnmounted } from 'vue';
 
 export default defineComponent({
   name: 'VPopup',
   props: {
     modelValue: Boolean
   },
-  emits: ['close', 'update:modelValue'],
+  emits: ['submit', 'update:modelValue', 'keyup'],
   setup(props, { emit }) {
     const isModalOpen = ref(props.modelValue);
 
-    const openModal = () => {
-      emit('update:modelValue', (isModalOpen.value = true));
+    const handleModalWindow = () => {
+      emit('update:modelValue', (isModalOpen.value = !isModalOpen.value));
+    };
+    
+    const handleEscapeModalWindowClose = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        emit('update:modelValue', (isModalOpen.value = !isModalOpen.value));
+      }
+    }
+
+    const submitModal = () => {
+      handleModalWindow();
+      emit('submit');
     };
 
-    const closeModal = () => {
-      emit('update:modelValue', (isModalOpen.value = false));
-      emit('close');
-    };
+    onMounted(() => {
+      window.addEventListener('keyup', handleEscapeModalWindowClose);
+    });
+
+    onUnmounted(() => {
+      window.removeEventListener('keyup', handleEscapeModalWindowClose);
+    })
 
     return {
       isModalOpen,
-      openModal,
-      closeModal
+      handleModalWindow,
+      submitModal,
     };
   }
 });
