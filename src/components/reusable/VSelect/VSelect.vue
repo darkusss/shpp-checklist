@@ -1,6 +1,7 @@
 <template>
   <div>
     <select v-model="computedSelected">
+      <slot name="first"></slot>
       <slot />
     </select>
   </div>
@@ -12,8 +13,12 @@ import { defineComponent, ref, computed } from 'vue';
 export default defineComponent({
   name: 'VSelect',
   props: {
-    selected: [String, Number],
+    selected: {
+      type: [String, Number],
+      default: '',
+    }
   },
+  emits: ['update:modelValue'],
   setup(props, { emit }) {
     const selected = ref(props.selected);
 

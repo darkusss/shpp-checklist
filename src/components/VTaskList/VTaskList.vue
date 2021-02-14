@@ -1,29 +1,36 @@
 <template>
   <div class="container">
-    <draggable class="list-group" tag="ul" :list="tasks" group="people" itemKey="taskText">
-      <template #item="{ element }">
-        <li>
-          <VTask
-            :task-title="element.taskText"
-            @update="changeState(element, $event)"
-            :task-response="element.taskResponse"
-          />
-        </li>
-      </template>
-    </draggable>
+    <div>
+      <draggable
+          class="list-group"
+          tag="ul"
+          :list="tasks"
+          group="users"
+          itemKey="id"
+      >
+        <template #item="{ element }">
+          <li>
+            <VTask
+                v-model="element.taskResponse"
+                :task-title="element.taskText"
+            />
+          </li>
+        </template>
+      </draggable>
+    </div>
     <VPopup @close="addTask" v-model="isPopupOpen">
       <template #modal-button>
-        Add task
+        {{ $t('message.addTaskButton') }}
       </template>
       <template #modal>
         <div>
-          <h2>Add task</h2>
-          <label class="">
-            <input type="text" v-model="newTaskValue" />
+          <h2>{{ $t('message.addTaskTitle') }}</h2>
+          <label>
+            <input type="text" v-model="newTaskValue"/>
           </label>
           <div>
-            <span>Deadline: </span>
-            <VDatePicker />
+            <span>{{ $t('message.deadline') }}</span>
+            <Datepicker v-model="currentDate"/>
           </div>
         </div>
       </template>
@@ -34,18 +41,18 @@
 <script lang="ts">
 import { defineComponent, ref } from 'vue';
 import draggable from 'vuedraggable';
-import VPopup from '@/components/reusable/VPopup';
-import VDatePicker from '@/components/VDatePicker';
-import VTask from '@/components/VTask';
+import Datepicker from 'vue3-datepicker';
 import useTasks from './composables/useTasks';
+import VPopup from '@/components/reusable/VPopup';
+import VTask from '@/components/VTask';
 
 export default defineComponent({
   name: 'VTaskList',
   components: {
     VTask,
     VPopup,
-    VDatePicker,
     draggable,
+    Datepicker,
   },
   props: {
     today: Boolean,
@@ -58,17 +65,16 @@ export default defineComponent({
 
     const isPopupOpen = ref(false);
     const newTaskValue = ref('');
+    const currentDate = ref(new Date());
 
     return {
       tasks,
       isPopupOpen,
-      newTaskValue
+      newTaskValue,
+      currentDate,
     };
   },
   methods: {
-    changeState(el: any, newValue: any) {
-      el.taskResponse = newValue;
-    },
     addTask() {
       // if this string is empty or has many spaces don't add it
       if (!this.newTaskValue.trim()) {
@@ -77,9 +83,10 @@ export default defineComponent({
 
       this.tasks.push({
         id: Math.random() * 100,
-        assigned: 'myself',
+        assigned: 'Bob',
         taskText: this.newTaskValue,
-        taskResponse: ''
+        taskResponse: null,
+        deadline: this.currentDate,
       });
 
       this.newTaskValue = '';
@@ -88,4 +95,4 @@ export default defineComponent({
 });
 </script>
 
-<style src="./VTaskList.css" scoped />
+<style src="./VTaskList.css" scoped/>

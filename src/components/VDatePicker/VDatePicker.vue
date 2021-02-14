@@ -3,7 +3,7 @@
      <VSelect class="date-picker-select" :selected="currentYear" v-model="currentYear" @change="editValue('year', $event.target.value)">
        <option v-for="year in years" :key="year" :value="year">{{ year }}</option>
      </VSelect>
-     <VSelect class="date-picker-select" :selected="currentMonth" v-model="currentMonth" @change="editValue('days', $event.target.value)">
+     <VSelect class="date-picker-select" :selected="currentMonth" v-model="currentMonth" @change="editValue('month', $event.target.value)">
        <option v-for="month in months" :key="month" :value="month">{{ month }}</option>
      </VSelect>
       <VSelect class="date-picker-select" :selected="currentDay" v-model="currentDay" @change="editValue('days', $event.target.value)">
@@ -26,6 +26,8 @@ export default defineComponent({
   },
   setup() {
     const dateValue = moment();
+
+    console.log(dateValue.format('dddd, MMMM Do YYYY, h:mm A'));
 
     const months = ref<string[]>(['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']);
     const days = ref<number>(dateValue.daysInMonth());

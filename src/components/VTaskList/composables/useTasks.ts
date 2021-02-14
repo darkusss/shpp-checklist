@@ -4,22 +4,33 @@ interface Task {
   id: number;
   assigned: string;
   taskText: string;
-  taskResponse: string;
+  taskResponse: string | null;
+  priority?: number | string,
+  deadline: string | Date | null,
 }
 
 export default function useTasks() {
   const tasks = ref<Array<Task>>([
     {
       id: 1,
-      assigned: 'Tamara',
+      assigned: 'Who',
       taskText: 'Кормить кота',
-      taskResponse: 'v'
+      taskResponse: null,
+      deadline: null,
     },
     {
       id: 2,
-      assigned: 'Vlad',
+      assigned: 'Is',
       taskText: 'купить книгу',
-      taskResponse: ')))'
+      taskResponse: null,
+      deadline: null,
+    },
+    {
+      id: 3,
+      assigned: 'That?',
+      taskText: 'забрать посылку',
+      taskResponse: null,
+      deadline: null,
     }
   ]);
 

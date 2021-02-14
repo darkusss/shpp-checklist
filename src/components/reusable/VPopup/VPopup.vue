@@ -7,7 +7,7 @@
       <div class="overlay" @click="closeModal" />
       <div class="modal">
         <slot name="modal"></slot>
-        <button @click="closeModal">Close</button>
+        <button @click="closeModal">{{ $t('message.addTaskAdd') }}</button>
       </div>
     </div>
   </teleport>
