@@ -10,7 +10,7 @@
           <button class="close-button" />
         </div>
         <slot name="modal"></slot>
-        <button @click="submitModal">Add</button>
+        <button @click="submitModal">{{ $t('message.addTaskAdd') }}</button>
       </div>
     </div>
   </teleport>

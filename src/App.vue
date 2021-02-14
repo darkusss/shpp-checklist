@@ -1,7 +1,7 @@
 <template>
   <div>
-    <h1>Checklist beginning</h1>
-    <h2>Tasks for today</h2>
+    <h1>{{ $t('message.heading') }}</h1>
+    <h2>{{ $t('message.todayTasks') }}</h2>
     <VTaskList today />
   </div>
 </template>
