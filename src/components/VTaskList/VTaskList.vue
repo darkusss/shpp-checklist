@@ -13,6 +13,7 @@
             <VTask
                 v-model="element.taskResponse"
                 :task-title="element.taskText"
+                :deadline="element.deadline"
             />
           </li>
         </template>

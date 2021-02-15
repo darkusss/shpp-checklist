@@ -1,8 +1,6 @@
 :root {
     box-sizing: border-box;
-    background: #84bd91;
-
-
+    background: #D4D6CF;
 }
 
 body {
@@ -14,6 +12,6 @@ body {
 }
 
 #app {
-    color: #2c3e50;
+    color: #333333;
     width: 100vw;
 }

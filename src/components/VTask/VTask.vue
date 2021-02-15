@@ -1,6 +1,9 @@
 <template>
   <div class="task-container">
-    <label>{{ taskTitle }}</label>
+    <label>
+      {{ taskTitle }}
+      <span v-if="deadline" class="task-deadline">{{ deadline.toLocaleString() }}</span>
+    </label>
     <VSelect v-model="selectedValue" @change="updateValue($event.target.value)">
       <template #first>
         <option value="" disabled>{{ $t('message.defaultSelectOption') }}</option>
@@ -22,6 +25,7 @@ export default defineComponent({
   props: {
     taskTitle: String,
     modelValue: String,
+    deadline: [Date, String],
   },
   setup() {
     const selectedValue = ref('');
