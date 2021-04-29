@@ -1,15 +1,18 @@
 <template>
-  <div class="container">
+  <div class="container mt-6">
     <div>
       <draggable
+          draggable=".draggable-item"
+          easing="cubic-bezier(1, 0, 0, 1)"
           class="list-group"
           tag="ul"
           :list="tasks"
-          group="users"
           itemKey="id"
+          @start="onStartDragging"
+          @end="onEndDragging"
       >
         <template #item="{ element }">
-          <li>
+          <li class="draggable-item">
             <VTask
                 v-model="element.taskResponse"
                 :task-title="element.taskText"
@@ -17,25 +20,28 @@
             />
           </li>
         </template>
+        <template #footer>
+          <VPopup @submit="addTask" v-model="isPopupOpen" @keyup.esc="isPopupOpen = false">
+            <template #modal-button>
+              {{ $t('message.addTaskButton') }}
+            </template>
+            <template #modal>
+              <div>
+                <h2>{{ $t('message.addTaskTitle') }}</h2>
+                <label>
+                  <input type="text" v-model="newTaskValue"/>
+                </label>
+                <div>
+                  <span>{{ $t('message.deadline') }}</span>
+                  <Datepicker v-model="currentDate"/>
+                </div>
+              </div>
+            </template>
+          </VPopup>
+        </template>
       </draggable>
     </div>
-    <VPopup @submit="addTask" v-model="isPopupOpen" @keyup.esc="isPopupOpen = false">
-      <template #modal-button>
-        {{ $t('message.addTaskButton') }}
-      </template>
-      <template #modal>
-        <div>
-          <h2>{{ $t('message.addTaskTitle') }}</h2>
-          <label>
-            <input type="text" v-model="newTaskValue"/>
-          </label>
-          <div>
-            <span>{{ $t('message.deadline') }}</span>
-            <Datepicker v-model="currentDate"/>
-          </div>
-        </div>
-      </template>
-    </VPopup>
+
   </div>
 </template>
 
@@ -67,15 +73,25 @@ export default defineComponent({
     const isPopupOpen = ref(false);
     const newTaskValue = ref('');
     const currentDate = ref(new Date());
+    const cursorProperty = ref('grab');
 
     return {
       tasks,
       isPopupOpen,
       newTaskValue,
       currentDate,
+      cursorProperty
     };
   },
   methods: {
+    onStartDragging() {
+      console.log('asdfasdf');
+      this.cursorProperty = 'grabbing';
+    },
+    onEndDragging() {
+      console.log('end event is fired')
+      this.cursorProperty = 'grab';
+    },
     addTask() {
       // if this string is empty or has many spaces don't add it
       if (!this.newTaskValue.trim()) {
@@ -95,5 +111,3 @@ export default defineComponent({
   }
 });
 </script>
-
-<style src="./VTaskList.css" scoped/>

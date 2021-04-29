@@ -1,8 +1,8 @@
 <template>
-  <div class="task-container">
+  <div>
     <label>
       {{ taskTitle }}
-      <span v-if="deadline" class="task-deadline">{{ deadline.toLocaleString() }}</span>
+      <span v-if="deadline">{{ deadline.toLocaleString() }}</span>
     </label>
     <VSelect v-model="selectedValue" @change="updateValue($event.target.value)">
       <template #first>
@@ -44,5 +44,3 @@ export default defineComponent({
   }
 });
 </script>
-
-<style src="./VTask.css" scoped />
