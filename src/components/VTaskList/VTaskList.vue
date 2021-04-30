@@ -1,5 +1,5 @@
 <template>
-  <div class="container mt-6">
+  <div class="mt-8">
     <div>
       <draggable
           draggable=".draggable-item"
@@ -23,7 +23,7 @@
         <template #footer>
           <VPopup @submit="addTask" v-model="isPopupOpen" @keyup.esc="isPopupOpen = false">
             <template #modal-button>
-              {{ $t('message.addTaskButton') }}
+              <span class="bg-orange-200 hover:bg-orange-300 block rounded p-4"> {{ $t('message.addTaskButton') }} </span>
             </template>
             <template #modal>
               <div>
@@ -93,14 +93,15 @@ export default defineComponent({
       this.cursorProperty = 'grab';
     },
     addTask() {
-      // if this string is empty or has many spaces don't add it
+      // if this string is empty or has only spaces don't add it
       if (!this.newTaskValue.trim()) {
         return;
       }
 
+      // mock data
       this.tasks.push({
         id: Math.random() * 100,
-        assigned: 'Bob',
+        assigned: 'Bob', // would be user id
         taskText: this.newTaskValue,
         taskResponse: null,
         deadline: this.currentDate,
