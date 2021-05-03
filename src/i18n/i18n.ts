@@ -4,10 +4,11 @@ export default {
       heading: 'Чек-лист',
       addTaskButton: 'Добавить задание',
       addTaskTitle: 'Что вы будете делать?',
-      addTaskAdd: 'Добавить задачу',
+      saveTaskAddingTitle: 'Добавить задачу',
       todayTasks: 'Задания на сегодня',
       defaultSelectOption: 'Выберите значение',
       deadline: 'Термин выполнения',
+      cancel: 'Отменить',
     },
   },
   ua: {
@@ -15,10 +16,11 @@ export default {
       heading: 'Трекер завдань',
       addTaskButton: 'Додати завдання',
       addTaskTitle: 'Що ви будете робити?',
-      addTaskAdd: 'Додати задачу',
+      saveTaskAddingTitle: 'Додати задачу',
       todayTasks: 'Завдання на сьогодні',
       defaultSelectOption: 'Оберіть значення',
       deadline: 'Термін виконання',
+      cancel: 'Відмінити'
     }
   },
 };

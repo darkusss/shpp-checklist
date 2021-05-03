@@ -5,12 +5,15 @@
   <teleport to="body">
     <div v-if="modelValue" class="modal-wrapper" >
       <div class="overlay" @click="handleModalWindow" />
-      <div class="modal">
+      <div class="modal bg-gray-50">
         <div class="close-button-container" @click="handleModalWindow">
           <button class="close-button" />
         </div>
         <slot name="modal"></slot>
-        <button @click="submitModal">{{ $t('message.addTaskAdd') }}</button>
+        <div class="max-h-48 h-1/2 flex items-end">
+          <button @click="submitModal" class="rounded-full bg-green-500 hover:bg-green-600 text-gray-50 font-semibold py-3 px-6 mr-5">{{ $t('message.saveTaskAddingTitle') }}</button>
+          <button @click="handleModalWindow" class="rounded-full bg-red-500 hover:bg-red-600 text-gray-50 font-semibold py-3 px-6">{{ $t('message.cancel')}}</button>
+        </div>
       </div>
     </div>
   </teleport>

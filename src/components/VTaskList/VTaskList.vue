@@ -23,17 +23,17 @@
         <template #footer>
           <VPopup @submit="addTask" v-model="isPopupOpen" @keyup.esc="isPopupOpen = false">
             <template #modal-button>
-              <span class="bg-orange-200 hover:bg-orange-300 block rounded p-4"> {{ $t('message.addTaskButton') }} </span>
+              <span class="bg-orange-400 hover:bg-orange-500 block rounded-full font-semibold text-gray-50 shadow py-3 px-6"> {{ $t('message.addTaskButton') }} </span>
             </template>
             <template #modal>
-              <div>
+              <div class="">
                 <h2>{{ $t('message.addTaskTitle') }}</h2>
                 <label>
-                  <input type="text" v-model="newTaskValue"/>
+                  <input class="border rounded border-black focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 p-2" type="text" placeholder="..." v-model="newTaskValue"/>
                 </label>
                 <div>
                   <span>{{ $t('message.deadline') }}</span>
-                  <Datepicker v-model="currentDate"/>
+                  <Datepicker class="border rounded border-black focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 p-2" v-model="currentDate"/>
                 </div>
               </div>
             </template>
@@ -41,7 +41,6 @@
         </template>
       </draggable>
     </div>
-
   </div>
 </template>
 
@@ -85,11 +84,9 @@ export default defineComponent({
   },
   methods: {
     onStartDragging() {
-      console.log('asdfasdf');
       this.cursorProperty = 'grabbing';
     },
     onEndDragging() {
-      console.log('end event is fired')
       this.cursorProperty = 'grab';
     },
     addTask() {
