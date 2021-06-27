@@ -3,11 +3,16 @@
     <div>
       <draggable
           draggable=".draggable-item"
-          easing="cubic-bezier(1, 0, 0, 1)"
           class="list-group"
           tag="ul"
-          :list="tasks"
-          itemKey="id"
+          :component-data="{
+            tag: 'ul',
+            type: 'transition-group',
+            name: !drag ? 'flip-list' : null
+          }"
+          v-bind="dragOptions"
+          v-model="tasks"
+          item-key="id"
           @start="onStartDragging"
           @end="onEndDragging"
       >
@@ -69,12 +74,14 @@ export default defineComponent({
   setup() {
     const { tasks } = useTasks();
 
+    const drag = ref(false);
     const isPopupOpen = ref(false);
     const newTaskValue = ref('');
     const currentDate = ref(new Date());
     const cursorProperty = ref('grab');
 
     return {
+      drag,
       tasks,
       isPopupOpen,
       newTaskValue,
@@ -85,19 +92,21 @@ export default defineComponent({
   methods: {
     onStartDragging() {
       this.cursorProperty = 'grabbing';
+      this.drag = true;
     },
     onEndDragging() {
       this.cursorProperty = 'grab';
+      this.drag = false;
     },
     addTask() {
-      // if this string is empty or has only spaces don't add it
+      // if this string is empty or has only spaces in it don't add it
       if (!this.newTaskValue.trim()) {
         return;
       }
 
       // mock data
       this.tasks.push({
-        id: Math.random() * 100,
+        id: Math.random() * 100, // would be task id
         assigned: 'Bob', // would be user id
         taskText: this.newTaskValue,
         taskResponse: null,
@@ -106,6 +115,17 @@ export default defineComponent({
 
       this.newTaskValue = '';
     }
-  }
+  },
+  computed: {
+    dragOptions() {
+      return {
+        animation: 200,
+        group: 'description',
+        disabled: false,
+        ghostClass: 'ghost'
+      };
+    }
+  },
 });
 </script>
+<style src="./style.css" scoped />

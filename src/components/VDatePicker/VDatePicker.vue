@@ -27,8 +27,6 @@ export default defineComponent({
   setup() {
     const dateValue = moment();
 
-    console.log(dateValue.format('dddd, MMMM Do YYYY, h:mm A'));
-
     const months = ref<string[]>(['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']);
     const days = ref<number>(dateValue.daysInMonth());
     const currentDay = ref(dateValue.date());

@@ -1,0 +1,15 @@
+.flip-list-move {
+    transition: transform 0.5s;
+}
+
+.no-move {
+    transition: transform 0s;
+}
+
+.draggable-item {
+
+}
+
+.ghost {
+    opacity: 0.5;
+}

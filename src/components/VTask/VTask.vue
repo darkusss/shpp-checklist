@@ -1,12 +1,12 @@
 <template>
   <div class=" shadow-lg max-w-sm bg-gray-50 rounded-lg my-4 px-2 py-2">
     <div class="h-16 flex justify-between">
-      <p class="truncate relative" ref="text">
+      <p class="truncate relative" ref="text" @mouseenter="updateTooltipShownValue()" @mouseleave="updateTooltipShownValue()">
         {{ taskTitle }}
-        <span v-if="tooltipShown" class="absolute top-6 left-0">
+        <span v-show="tooltipShown" class="absolute top-6 left-0">
           <span class="relative bg-gray-800 text-gray-50 py-1 px-2 border-1 rounded text-sm" role="tooltip" ref="tooltip">
             {{ taskTitle }}
-            <span class="absolute" data-popper-arrow></span>
+            <span class="absolute" id="arrow" data-popper-arrow />
           </span>
         </span>
       </p>
@@ -24,9 +24,9 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, onMounted } from 'vue';
+import { defineComponent, ref, onMounted, watch } from 'vue';
 import VSelect from '@/components/reusable/VSelect';
-import Popper from 'popper.js';
+import { createPopper } from '@popperjs/core';
 
 export default defineComponent({
   name: 'VTask',
@@ -45,11 +45,33 @@ export default defineComponent({
     const tooltip = ref<HTMLElement | null>(null);
     const options = ['готово на 100%', 'недороблено', 'нічого робити'];
 
+    //@ts-ignore
+    let popperInstance = null;
+
     onMounted(() => {
       if (text.value !== null && tooltip.value !== null) {
-        new Popper(text.value, tooltip.value);
+        popperInstance = createPopper(text.value, tooltip.value, {
+          modifiers: [
+            {
+              name: 'offset',
+              options: {
+                offset: [0, 8],
+              },
+            },
+          ],
+        });
       }
     });
+
+    //@ts-ignore
+    watch(tooltipShown, () => {
+      //@ts-ignore
+      if (popperInstance) {
+        console.log('hello')
+        //@ts-ignore
+        popperInstance.update();
+      }
+    })
 
     return {
       selectedValue,
@@ -64,10 +86,13 @@ export default defineComponent({
     updateValue(value: string) {
       this.$emit('update:modelValue', value);
     },
-    updateTooltipShownValue(value: boolean) {
-      this.tooltipShown = value;
+    updateTooltipShownValue() {
+      this.tooltipShown = !this.tooltipShown;
     }
   }
 
 });
 </script>
+
+
+<style scoped src="./style.css" />
